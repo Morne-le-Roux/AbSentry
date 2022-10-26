@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'basicbutton.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,6 +13,15 @@ class HomeScreen extends StatelessWidget {
         title: Center(
           child: Text("AbSentry"),
         ),
+      ),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              BasicButton(),
+            ],
+          ),
+        ],
       ),
     );
   }
