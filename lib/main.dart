@@ -13,6 +13,7 @@ class AbSentry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
           colorScheme: ThemeData.dark().colorScheme.copyWith(
               primary: Color(0xFF0A0E21), secondary: Colors.redAccent.shade400),
