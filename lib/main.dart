@@ -1,3 +1,4 @@
+import 'package:absentry/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,6 +10,11 @@ class AbSentry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      initialRoute: "/home",
+      routes: {
+        "/home": (context) => const HomeScreen(),
+      },
+    );
   }
 }
