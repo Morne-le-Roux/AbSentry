@@ -15,11 +15,16 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Row(
-            children: [
-              BasicButton(),
-            ],
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                BasicButton(icon: Icon(Icons.group_add), text: "New Class"),
+                BasicButton(icon: Icon(Icons.list_alt), text: "New Entry"),
+              ],
+            ),
           ),
         ],
       ),
