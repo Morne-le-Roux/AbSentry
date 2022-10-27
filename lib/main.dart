@@ -23,7 +23,7 @@ class AbSentry extends StatelessWidget {
               .copyWith(backgroundColor: Color(0xFF0A0E21))),
       initialRoute: "/home",
       routes: {
-        "/home": (context) => const HomeScreen(),
+        "/home": (context) => HomeScreen(),
       },
     );
   }
