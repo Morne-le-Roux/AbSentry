@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:absentry/home.dart';
+import 'package:absentry/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,8 +22,9 @@ class AbSentry extends StatelessWidget {
           appBarTheme: ThemeData.dark()
               .appBarTheme
               .copyWith(backgroundColor: Color(0xFF0A0E21))),
-      initialRoute: "/home",
+      initialRoute: "/splash",
       routes: {
+        "/splash": (context) => SplashScreen(),
         "/home": (context) => HomeScreen(),
       },
     );
