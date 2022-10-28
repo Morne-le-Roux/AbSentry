@@ -5,15 +5,17 @@ import 'package:flutter/material.dart';
 class BasicButton extends StatelessWidget {
   final Widget icon;
   final String text;
+  final VoidCallback onpressed;
 
-  BasicButton({required this.icon, required this.text});
+  BasicButton(
+      {required this.icon, required this.text, required this.onpressed});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ElevatedButton(
-          onPressed: () {},
+          onPressed: onpressed,
           style: ElevatedButton.styleFrom(
               foregroundColor: Colors.white,
               backgroundColor: Colors.indigo,

@@ -16,8 +16,20 @@ class HomeScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                BasicButton(icon: Icon(Icons.group_add), text: "New Class"),
-                BasicButton(icon: Icon(Icons.list_alt), text: "New Entry"),
+                BasicButton(
+                  icon: Icon(Icons.group_add),
+                  text: "New Class",
+                  onpressed: () {
+                    Navigator.pushNamed(context, "/newClassScreen");
+                  },
+                ),
+                BasicButton(
+                  icon: Icon(Icons.list_alt),
+                  text: "New Entry",
+                  onpressed: () {
+                    Navigator.pushNamed(context, "/newEntryScreen");
+                  },
+                ),
               ],
             ),
           ),
