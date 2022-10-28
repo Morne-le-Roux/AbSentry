@@ -15,13 +15,13 @@ class AbSentry extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-          colorScheme: ThemeData.dark().colorScheme.copyWith(
-              primary: Color(0xFF0A0E21), secondary: Colors.redAccent.shade400),
-          scaffoldBackgroundColor: Color(0xFF0A0E21),
-          appBarTheme: ThemeData.dark()
-              .appBarTheme
-              .copyWith(backgroundColor: Color(0xFF0A0E21))),
+      // theme: ThemeData.dark().copyWith(
+      //     colorScheme: ThemeData.dark().colorScheme.copyWith(
+      //         primary: Color(0xFF0A0E21), secondary: Colors.redAccent.shade400),
+      //     scaffoldBackgroundColor: Color(0xFF0A0E21),
+      //     appBarTheme: ThemeData.dark()
+      //         .appBarTheme
+      //         .copyWith(backgroundColor: Color(0xFF0A0E21))),
       initialRoute: "/splash",
       routes: {
         "/splash": (context) => SplashScreen(),
