@@ -15,16 +15,18 @@ class SplashScreen extends StatelessWidget {
       splash: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset("assets/splash-bubbles.json"),
           Text(
             "AbSentry",
             style: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.indigoAccent),
+                fontWeight: FontWeight.normal,
+                color: Colors.grey[300],
+                fontFamily: "SplashFont",
+                fontSize: 70.0),
           )
         ],
       ),
       nextScreen: HomeScreen(),
-      duration: 500,
+      duration: 3000,
       splashTransition: SplashTransition.fadeTransition,
       pageTransitionType: PageTransitionType.fade,
       splashIconSize: 100,
