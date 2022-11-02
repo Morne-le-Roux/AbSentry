@@ -49,20 +49,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontSize: 30),
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Colors.grey[50],
-                  border: Border.all(color: Colors.grey.shade300)),
+                  border: Border.all(color: Colors.grey.shade400)),
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 onChanged: (value) => email = value,
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Email Address",
-                    hintStyle: TextStyle(color: Colors.grey[400])),
+                    hintStyle: TextStyle(color: Colors.grey.shade400)),
               ),
             ),
           ),
@@ -72,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Colors.grey[50],
-                  border: Border.all(color: Colors.grey.shade300)),
+                  border: Border.all(color: Colors.grey.shade400)),
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 obscureText: true,
@@ -88,7 +91,19 @@ class _LoginScreenState extends State<LoginScreen> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: RoundedButton(
-                color: Colors.grey.shade300, onPressed: (() {}), text: "Login"),
+                color: Colors.grey.shade300,
+                onPressed: () async {
+                  try {
+                    final user = await _auth.signInWithEmailAndPassword(
+                        email: email, password: password);
+                    if (user != null) {
+                      Navigator.pushNamed(context, "/home");
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
+                },
+                text: "Login"),
           ),
           Center(
               child: Text(
