@@ -11,26 +11,33 @@ class NewClassScreen extends StatelessWidget {
     String className;
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: Colors.grey[50],
-                  border: Border.all(color: Colors.white)),
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: TextField(
-                onChanged: (value) => className = value,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Class Name",
-                    hintStyle: TextStyle(color: Colors.grey[400])),
-              ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 40,
+          ),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      color: Colors.grey[50],
+                      border: Border.all(color: Colors.white)),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    onChanged: (value) => className = value,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Class Name",
+                        hintStyle: TextStyle(color: Colors.grey[400])),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
