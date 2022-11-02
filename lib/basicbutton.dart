@@ -17,8 +17,8 @@ class BasicButton extends StatelessWidget {
         ElevatedButton(
           onPressed: onpressed,
           style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.indigo,
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.grey.shade300,
               shape: StadiumBorder()),
           child: icon,
         ),
