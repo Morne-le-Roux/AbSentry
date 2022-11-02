@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_import, prefer_const_literals_to_create_immutables, must_be_immutable
+// ignore_for_file: prefer_const_constructors, unnecessary_import, prefer_const_literals_to_create_immutables, must_be_immutable, unused_import, unused_local_variable
 
 import 'package:absentry/rounded_button.dart';
 import 'package:flutter/material.dart';
