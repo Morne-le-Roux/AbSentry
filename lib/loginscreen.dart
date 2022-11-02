@@ -26,7 +26,7 @@ class LoginScreen extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   color: Colors.grey,
                   fontFamily: "SplashFont",
-                  fontSize: 70.0),
+                  fontSize: 80.0),
             ),
           ),
           Center(
