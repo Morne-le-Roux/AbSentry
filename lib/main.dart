@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, depend_on_referenced_packages
 
 import 'package:absentry/home.dart';
+import 'package:absentry/loginscreen.dart';
 import 'package:absentry/newclassscreen.dart';
 import 'package:absentry/newentryscreen.dart';
 import 'package:absentry/splash.dart';
@@ -24,6 +25,7 @@ class AbSentry extends StatelessWidget {
       initialRoute: "/splash",
       routes: {
         "/splash": (context) => SplashScreen(),
+        "/login": (context) => LoginScreen(),
         "/home": (context) => HomeScreen(),
         "/newClassScreen": (context) => NewClassScreen(),
         "/newEntryScreen": (context) => NewEntryScreen(),
