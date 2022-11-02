@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'rounded_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
+  late String email;
+  late String password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
               "AbSentry",
               style: TextStyle(
                   fontWeight: FontWeight.normal,
-                  color: Colors.grey,
+                  color: Colors.grey.shade700,
                   fontFamily: "SplashFont",
                   fontSize: 80.0),
             ),
@@ -55,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   border: Border.all(color: Colors.grey.shade300)),
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
+                onChanged: (value) => email = value,
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Email Address",
@@ -71,6 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   border: Border.all(color: Colors.grey.shade300)),
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
+                obscureText: true,
+                onChanged: (value) => password = value,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: "Password",
@@ -79,6 +85,16 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: RoundedButton(
+                color: Colors.grey.shade300, onPressed: (() {}), text: "Login"),
+          ),
+          Center(
+              child: Text(
+            "Not a member? Join here.",
+            style: TextStyle(color: Colors.grey.shade700),
+          ))
         ],
       ),
     ));
