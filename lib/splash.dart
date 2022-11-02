@@ -12,25 +12,35 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSplashScreen(
-      splash: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "AbSentry",
-            style: TextStyle(
-                fontWeight: FontWeight.normal,
-                color: Colors.grey[300],
-                fontFamily: "SplashFont",
-                fontSize: 70.0),
-          )
-        ],
-      ),
-      nextScreen: LoginScreen(),
-      duration: 3000,
-      splashTransition: SplashTransition.fadeTransition,
-      pageTransitionType: PageTransitionType.fade,
-      splashIconSize: 100,
-    );
+    return Scaffold(
+        backgroundColor: Colors.transparent,
+        body: DecoratedBox(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      "assets/background.jpg",
+                    ),
+                    fit: BoxFit.fill)),
+            child: AnimatedSplashScreen(
+              backgroundColor: Colors.transparent,
+              splash: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "AbSentry",
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey.shade700,
+                        fontFamily: "SplashFont",
+                        fontSize: 70.0),
+                  )
+                ],
+              ),
+              nextScreen: LoginScreen(),
+              duration: 3000,
+              splashTransition: SplashTransition.fadeTransition,
+              pageTransitionType: PageTransitionType.fade,
+              splashIconSize: 100,
+            )));
   }
 }
