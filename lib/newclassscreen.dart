@@ -10,8 +10,14 @@ class NewClassScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String className;
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: Column(
+        body: DecoratedBox(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                "assets/background.jpg",
+              ),
+              fit: BoxFit.fill)),
+      child: Column(
         children: [
           SizedBox(
             height: 40,
@@ -24,7 +30,7 @@ class NewClassScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       color: Colors.grey[50],
-                      border: Border.all(color: Colors.white)),
+                      border: Border.all(color: Colors.grey.shade300)),
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
                     onChanged: (value) => className = value,
@@ -39,6 +45,6 @@ class NewClassScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }

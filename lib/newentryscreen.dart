@@ -8,7 +8,14 @@ class NewEntryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(
+                  "assets/background.jpg",
+                ),
+                fit: BoxFit.fill)),
+      ),
     );
   }
 }
