@@ -29,18 +29,45 @@ class NewClassScreen extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      color: Colors.grey[50],
-                      border: Border.all(color: Colors.grey.shade300)),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    color: Colors.grey[50],
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
                     onChanged: (value) => className = value,
                     decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Class Name",
-                        hintStyle: TextStyle(color: Colors.grey[400])),
+                      border: InputBorder.none,
+                      hintText: "New Class Name",
+                      hintStyle: TextStyle(color: Colors.grey[400]),
+                    ),
                   ),
                 ),
+                RoundedButton(
+                    color: Colors.grey.shade200,
+                    onPressed: () {},
+                    text: "Add Class"),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    color: Colors.grey[50],
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      Text("This is a test"),
+                      Text("This is a test"),
+                      Text("This is a test"),
+                      Text("This is a test"),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
