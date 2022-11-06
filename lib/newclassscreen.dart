@@ -30,7 +30,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
   void getCurrentUser() {
     try {
       final user = auth.currentUser!;
-      //TODO: THIS IS UPDATED IN A NEW VERSION OF FLUTTER. LEARN WTF IS GOING ON HERE.
+      //TODO: THIS IS UPDATED IN A NEW VERSION OF FLUTTER. LEARN WTF IS NULL SAFETY
       if (user != null) {
         loggedInUser = user;
       }
