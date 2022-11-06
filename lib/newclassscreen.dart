@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/rendering.dart';
 
 final firestore = FirebaseFirestore.instance;
 late User loggedInUser;
+String className = "";
+List<String> childrenList = [];
 
 class NewClassScreen extends StatefulWidget {
   NewClassScreen({super.key});
@@ -18,6 +21,7 @@ class NewClassScreen extends StatefulWidget {
 
 class _NewClassScreenState extends State<NewClassScreen> {
   final textFieldController = TextEditingController();
+  final childTextFieldController = TextEditingController();
   final auth = FirebaseAuth.instance;
 
   @override
@@ -41,7 +45,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String className = "";
+    String newChildName = "";
     return Scaffold(
         body: DecoratedBox(
       decoration: BoxDecoration(
@@ -78,24 +82,39 @@ class _NewClassScreenState extends State<NewClassScreen> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    color: Colors.grey[50],
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    onChanged: (value) => newChildName = value,
+                    controller: childTextFieldController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Child Name",
+                      hintStyle: TextStyle(color: Colors.grey[400]),
+                    ),
+                  ),
+                ),
                 RoundedButton(
                     color: Colors.grey.shade200,
                     onPressed: () {
-                      textFieldController.clear();
-                      if (className == "") {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Blank Class Names Not Allowed!")));
-                      } else {
-                        firestore
-                            .collection("$loggedInUser")
-                            .add({"class name": className});
-                      }
-                      firestore
-                          .collection("$loggedInUser")
-                          .add({"class name": className});
+                      setState(() {});
+                      childrenList.add(newChildName);
+                      childTextFieldController.clear();
                     },
-                    text: "Add Class"),
+                    text: "Add Child"),
+                Text("Children"),
                 Container(
+                  height: 400,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
@@ -105,18 +124,43 @@ class _NewClassScreenState extends State<NewClassScreen> {
                   ),
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
+                  child: ListView(
+                    shrinkWrap: true,
                     children: [
-                      Text("This is a test"),
-                      Text("This is a test"),
-                      Text("This is a test"),
-                      Text("This is a test"),
+                      for (var child in childrenList)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            child,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                        )
                     ],
                   ),
                 )
               ],
             ),
           ),
+          RoundedButton(
+              color: Colors.grey.shade200,
+              onPressed: () {
+                for (var child in childrenList) {
+                  firestore
+                      .collection("${loggedInUser.email}")
+                      .doc("Classes")
+                      .collection(className)
+                      .doc(child)
+                      .set({});
+
+                  textFieldController.clear();
+                  childrenList = [];
+                  setState(() {});
+                }
+              },
+              text: "Add Class")
         ],
       ),
     ));
