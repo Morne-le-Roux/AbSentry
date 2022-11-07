@@ -2,9 +2,40 @@
 
 import 'package:flutter/material.dart';
 import 'basicbutton.dart';
+import 'package:absentry/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HomeScreen extends StatelessWidget {
+final firebase = FirebaseFirestore.instance;
+final auth = FirebaseAuth.instance;
+late User loggedInUser;
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  void getCurrentUser() {
+    try {
+      final user = auth.currentUser!;
+      //TODO: THIS IS UPDATED IN A NEW VERSION OF FLUTTER. LEARN WTF IS NULL SAFETY
+      if (user != null) {
+        loggedInUser = user;
+      }
+    } catch (e) {
+      //TODO: IMPLEMENT CATCH BLOCK
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentUser();
+  }
 
   @override
   Widget build(BuildContext context) {

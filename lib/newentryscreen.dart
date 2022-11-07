@@ -1,9 +1,40 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class NewEntryScreen extends StatelessWidget {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'home.dart';
+
+final firestore = FirebaseFirestore.instance;
+List children = [];
+List<Widget> childrenWidgets = [];
+Map childEntry = {};
+
+class NewEntryScreen extends StatefulWidget {
   const NewEntryScreen({super.key});
+
+  @override
+  State<NewEntryScreen> createState() => _NewEntryScreenState();
+}
+
+class _NewEntryScreenState extends State<NewEntryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getDocs();
+    for (var child in children) {
+      childrenWidgets.add(ChildWidget(child));
+    }
+  }
+
+  Future getDocs() async {
+    CollectionReference userData =
+        firestore.collection("${loggedInUser.email}");
+    QuerySnapshot querySnapshot = await userData.get();
+    children = querySnapshot.docs.map((doc) => doc.data()).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +46,56 @@ class NewEntryScreen extends StatelessWidget {
                   "assets/background.jpg",
                 ),
                 fit: BoxFit.fill)),
+        child: Column(
+          children: childrenWidgets,
+        ),
       ),
+    );
+  }
+}
+
+class GetClassList extends StatelessWidget {
+  final String documentID;
+
+  @override
+  GetClassList(this.documentID);
+  Widget build(BuildContext context) {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('${loggedInUser.email}');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(documentID).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return Text("Document does not exist");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text("${data}");
+        }
+
+        return Text("loading");
+      },
+    );
+  }
+}
+
+class ChildWidget extends StatelessWidget {
+  final String childName;
+  ChildWidget(this.childName, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      child: Text(childName),
     );
   }
 }

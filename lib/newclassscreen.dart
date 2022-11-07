@@ -147,6 +147,12 @@ class _NewClassScreenState extends State<NewClassScreen> {
           RoundedButton(
               color: Colors.grey.shade200,
               onPressed: () {
+                List classToAdd = [className];
+                firestore
+                    .collection("${loggedInUser.email}")
+                    .doc("Classes")
+                    .update({"ClassList": FieldValue.arrayUnion(classToAdd)});
+
                 for (var child in childrenList) {
                   firestore
                       .collection("${loggedInUser.email}")

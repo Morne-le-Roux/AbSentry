@@ -1,14 +1,39 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_null_comparison, use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'rounded_button.dart';
+
+late User loggedInUser;
+
+void getCurrentUser() {
+  try {
+    final user = FirebaseAuth.instance.currentUser;
+    //TODO: THIS IS UPDATED IN A NEW VERSION OF FLUTTER. LEARN WTF IS NULL SAFETY
+    if (user != null) {
+      loggedInUser = user;
+    }
+  } catch (e) {
+    //TODO: IMPLEMENT CATCH BLOCK
+  }
+}
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class UserInit {
+  UserInit() {
+    getCurrentUser();
+    FirebaseFirestore.instance
+        .collection("${loggedInUser.email}")
+        .doc("Classes")
+        .set({"Classes": []});
+  }
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
@@ -122,6 +147,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           await _auth.createUserWithEmailAndPassword(
                               email: email, password: password);
                       if (newUser != null) {
+                        UserInit();
                         Navigator.pushNamed(context, "/home");
                       }
                     } else {
