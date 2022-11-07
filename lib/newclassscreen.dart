@@ -10,7 +10,7 @@ import 'package:flutter/rendering.dart';
 final firestore = FirebaseFirestore.instance;
 late User loggedInUser;
 String className = "";
-List<String> childrenList = [];
+List<String> _childrenList = [];
 
 class NewClassScreen extends StatefulWidget {
   NewClassScreen({super.key});
@@ -108,7 +108,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
                     color: Colors.grey.shade200,
                     onPressed: () {
                       setState(() {});
-                      childrenList.add(newChildName);
+                      _childrenList.add(newChildName);
                       childTextFieldController.clear();
                     },
                     text: "Add Child"),
@@ -127,7 +127,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
-                      for (var child in childrenList)
+                      for (var child in _childrenList)
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -153,7 +153,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
                     .doc("Classes")
                     .update({"ClassList": FieldValue.arrayUnion(classToAdd)});
 
-                for (var child in childrenList) {
+                for (var child in _childrenList) {
                   firestore
                       .collection("${loggedInUser.email}")
                       .doc("Classes")
@@ -162,7 +162,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
                       .set({});
 
                   textFieldController.clear();
-                  childrenList = [];
+                  _childrenList = [];
                   setState(() {});
                 }
               },

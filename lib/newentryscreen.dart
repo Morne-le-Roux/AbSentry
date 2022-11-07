@@ -8,9 +8,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'home.dart';
 
 final firestore = FirebaseFirestore.instance;
-List children = [];
-List<Widget> childrenWidgets = [];
-Map childEntry = {};
+List _children = [];
+List<Widget> _childrenWidgets = [];
+Map _childEntry = {};
 
 class NewEntryScreen extends StatefulWidget {
   const NewEntryScreen({super.key});
@@ -24,8 +24,8 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   void initState() {
     super.initState();
     getDocs();
-    for (var child in children) {
-      childrenWidgets.add(ChildWidget(child));
+    for (var child in _children) {
+      _childrenWidgets.add(ChildWidget(child));
     }
   }
 
@@ -33,7 +33,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
     CollectionReference userData =
         firestore.collection("${loggedInUser.email}");
     QuerySnapshot querySnapshot = await userData.get();
-    children = querySnapshot.docs.map((doc) => doc.data()).toList();
+    _children = querySnapshot.docs.map((doc) => doc.data()).toList();
   }
 
   @override
@@ -46,8 +46,10 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                   "assets/background.jpg",
                 ),
                 fit: BoxFit.fill)),
-        child: Column(
-          children: childrenWidgets,
+        child: Container(
+          child: Column(
+            children: _childrenWidgets,
+          ),
         ),
       ),
     );
