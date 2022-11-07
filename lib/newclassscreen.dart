@@ -148,18 +148,38 @@ class _NewClassScreenState extends State<NewClassScreen> {
               color: Colors.grey.shade200,
               onPressed: () {
                 List classToAdd = [className];
+                List childToAdd = [];
                 firestore
                     .collection("${loggedInUser.email}")
                     .doc("Classes")
                     .update({"ClassList": FieldValue.arrayUnion(classToAdd)});
 
+                firestore
+                    .collection("${loggedInUser.email}")
+                    .doc("Classes")
+                    .collection(className)
+                    .doc("Children")
+                    .set({"ChildrenList": []});
+
                 for (var child in _childrenList) {
+                  childToAdd = [child];
+
                   firestore
                       .collection("${loggedInUser.email}")
                       .doc("Classes")
                       .collection(className)
-                      .doc(child)
-                      .set({});
+                      .doc("Children")
+                      .collection(child)
+                      .doc("placeholder")
+                      .set({"data": "data"});
+
+                  firestore
+                      .collection("${loggedInUser.email}")
+                      .doc("Classes")
+                      .collection(className)
+                      .doc("Children")
+                      .update(
+                          {"ChildrenList": FieldValue.arrayUnion(childToAdd)});
 
                   textFieldController.clear();
                   _childrenList = [];
