@@ -27,6 +27,8 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
     for (var child in _children) {
       _childrenWidgets.add(ChildWidget(child));
     }
+    print(_childrenWidgets);
+    print(_children);
   }
 
   Future getDocs() async {
@@ -46,45 +48,8 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                   "assets/background.jpg",
                 ),
                 fit: BoxFit.fill)),
-        child: Container(
-          child: Column(
-            children: _childrenWidgets,
-          ),
-        ),
+        child: Container(),
       ),
-    );
-  }
-}
-
-class GetClassList extends StatelessWidget {
-  final String documentID;
-
-  @override
-  GetClassList(this.documentID);
-  Widget build(BuildContext context) {
-    CollectionReference users =
-        FirebaseFirestore.instance.collection('${loggedInUser.email}');
-
-    return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(documentID).get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
-
-        if (snapshot.hasData && !snapshot.data!.exists) {
-          return Text("Document does not exist");
-        }
-
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-          return Text("${data}");
-        }
-
-        return Text("loading");
-      },
     );
   }
 }
