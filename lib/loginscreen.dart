@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_null_comparison, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'rounded_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _auth = FirebaseAuth.instance;
+  final supabase = Supabase.instance.client;
   late String email;
   late String password;
   @override
@@ -94,9 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Colors.grey.shade300,
                 onPressed: () async {
                   try {
-                    final user = await _auth.signInWithEmailAndPassword(
-                        email: email, password: password);
-                    if (user != null) {
+                    final AuthResponse res = await supabase.auth
+                        .signInWithPassword(email: email, password: password);
+                    final Session? session = res.session;
+                    if (session != null) {
                       Navigator.pushNamed(context, "/home");
                     }
                   } catch (e) {

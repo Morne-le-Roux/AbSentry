@@ -3,11 +3,10 @@
 import 'package:absentry/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/rendering.dart';
 
-final firestore = FirebaseFirestore.instance;
+import 'package:flutter/rendering.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 late User loggedInUser;
 String className = "";
 List<String> _childrenList = [];
@@ -22,24 +21,21 @@ class NewClassScreen extends StatefulWidget {
 class _NewClassScreenState extends State<NewClassScreen> {
   final textFieldController = TextEditingController();
   final childTextFieldController = TextEditingController();
-  final auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     super.initState();
-
-    getCurrentUser();
+    // getCurrentUser();
   }
 
-  void getCurrentUser() {
-    try {
-      final user = auth.currentUser!;
-      //TODO: THIS IS UPDATED IN A NEW VERSION OF FLUTTER. LEARN WTF IS NULL SAFETY
-      loggedInUser = user;
-    } catch (e) {
-      //TODO: IMPLEMENT CATCH BLOCK
-    }
-  }
+  // void getCurrentUser() {
+  //   try {
+  //     final user = auth.currentUser!;
+  //     loggedInUser = user;
+  //   } catch (e) {
+  //     //TODO: IMPLEMENT CATCH BLOCK
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -145,44 +141,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
           RoundedButton(
               color: Colors.grey.shade200,
               onPressed: () {
-                List classToAdd = [className];
-                List childToAdd = [];
-                firestore
-                    .collection("${loggedInUser.email}")
-                    .doc("Classes")
-                    .update({"ClassList": FieldValue.arrayUnion(classToAdd)});
-
-                firestore
-                    .collection("${loggedInUser.email}")
-                    .doc("Classes")
-                    .collection(className)
-                    .doc("Children")
-                    .set({"ChildrenList": []});
-
-                for (var child in _childrenList) {
-                  childToAdd = [child];
-
-                  firestore
-                      .collection("${loggedInUser.email}")
-                      .doc("Classes")
-                      .collection(className)
-                      .doc("Children")
-                      .collection(child)
-                      .doc("placeholder")
-                      .set({"data": "data"});
-
-                  firestore
-                      .collection("${loggedInUser.email}")
-                      .doc("Classes")
-                      .collection(className)
-                      .doc("Children")
-                      .update(
-                          {"ChildrenList": FieldValue.arrayUnion(childToAdd)});
-
-                  textFieldController.clear();
-                  _childrenList = [];
-                  setState(() {});
-                }
+                // InitClass().addClass(className: className);
               },
               text: "Add Class")
         ],
@@ -190,3 +149,15 @@ class _NewClassScreenState extends State<NewClassScreen> {
     ));
   }
 }
+
+// class InitClass {
+//   late final String? className;
+
+//   addClass({required className}) {
+//     for (var child in _childrenList) {
+//       db.collection(className).add({"Name": child});
+//     }
+
+//     // db.collection(className).add(_childrenList);
+//   }
+// }

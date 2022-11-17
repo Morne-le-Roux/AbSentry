@@ -1,23 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_null_comparison, use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'rounded_button.dart';
 
-late User loggedInUser;
-
-void getCurrentUser() {
-  try {
-    final user = FirebaseAuth.instance.currentUser;
-    //TODO: THIS IS UPDATED IN A NEW VERSION OF FLUTTER. LEARN WTF IS NULL SAFETY
-    if (user != null) {
-      loggedInUser = user;
-    }
-  } catch (e) {
-    //TODO: IMPLEMENT CATCH BLOCK
-  }
-}
+final supabase = Supabase.instance.client;
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -26,18 +14,17 @@ class RegistrationScreen extends StatefulWidget {
   State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
-class UserInit {
-  UserInit() {
-    getCurrentUser();
-    FirebaseFirestore.instance
-        .collection("${loggedInUser.email}")
-        .doc("Classes")
-        .set({"Classes": []});
-  }
-}
+// class UserInit {
+//   UserInit() {
+//     getCurrentUser();
+//     FirebaseFirestore.instance
+//         .collection("${loggedInUser.email}")
+//         .doc("Classes")
+//         .set({"Classes": []});
+//   }
+// }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final _auth = FirebaseAuth.instance;
   late String email;
   late String password;
   late String password1;
@@ -143,11 +130,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     if (password1 == password2) {
                       password = password1;
 
-                      final newUser =
-                          await _auth.createUserWithEmailAndPassword(
-                              email: email, password: password);
-                      if (newUser != null) {
-                        UserInit();
+                      AuthResponse res = await supabase.auth
+                          .signUp(email: email, password: password);
+
+                      final Session? session = res.session;
+
+                      if (session != null) {
+                        // UserInit();
                         Navigator.pushNamed(context, "/home");
                       }
                     } else {
