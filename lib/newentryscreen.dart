@@ -1,14 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'home.dart';
-
-final firestore = FirebaseFirestore.instance;
+final _firestore = FirebaseFirestore.instance;
 List _children = [];
 List<Widget> _childrenWidgets = [];
-Map _childEntry = {};
 
 class NewEntryScreen extends StatefulWidget {
   const NewEntryScreen({super.key});
@@ -21,46 +18,43 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   @override
   void initState() {
     super.initState();
-    getDocs();
+    getChildren();
+  }
+
+  void createChildWidgets() {
     for (var child in _children) {
-      _childrenWidgets.add(ChildWidget(child));
+      _childrenWidgets.add(ChildWidget(child["ChildName"]));
     }
   }
 
-  Future getDocs() async {
-    CollectionReference userData =
-        firestore.collection("${loggedInUser.email}");
-    QuerySnapshot querySnapshot = await userData.get();
-    _children = querySnapshot.docs.map((doc) => doc.data()).toList();
+  Future getChildren() async {
+    CollectionReference childrenData = _firestore.collection("Children");
+    QuerySnapshot querySnapshot = await childrenData.get();
+    List allChildren = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    for (var child in allChildren) {
+      if (child["ClassID"] == "Class 1") {
+        _children.add(child);
+      }
+    }
+    print("shits about to happen");
+    createChildWidgets();
+    print("if you're seeing this then it probably worked");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: DecoratedBox(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(
-                  "assets/background.jpg",
-                ),
-                fit: BoxFit.fill)),
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  color: Colors.white,
-                  child: Text("data"),
-                ),
-              ),
-              ChildWidget("Morne")
-            ],
-          ),
-        ),
-      ),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    "assets/background.jpg",
+                  ),
+                  fit: BoxFit.fill)),
+          child: ListView(
+            children: _childrenWidgets,
+          )),
     );
   }
 }
