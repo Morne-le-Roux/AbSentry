@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "301741516540",
+    "project_id": "absentry-b3c52",
+    "storage_bucket": "absentry-b3c52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301741516540:android:5800d16ca35c749debd979",
+        "android_client_info": {
+          "package_name": "com.morneleroux.absentry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301741516540-7gnhiv07l6k2ea1qe4l5nmpnl91491ov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoWtTdgcO7li4UuWLrxz14vPT-fE1opPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301741516540-7gnhiv07l6k2ea1qe4l5nmpnl91491ov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
