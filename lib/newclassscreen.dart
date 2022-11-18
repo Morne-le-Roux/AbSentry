@@ -34,7 +34,6 @@ class _NewClassScreenState extends State<NewClassScreen> {
   void getCurrentUser() {
     try {
       final user = auth.currentUser!;
-      //TODO: THIS IS UPDATED IN A NEW VERSION OF FLUTTER. LEARN WTF IS NULL SAFETY
       _loggedInUser = user;
     } catch (e) {
       //TODO: IMPLEMENT CATCH BLOCK
@@ -120,19 +119,27 @@ class _NewClassScreenState extends State<NewClassScreen> {
                     color: Colors.grey[50],
                     border: Border.all(color: Colors.grey.shade300),
                   ),
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  alignment: Alignment.topLeft,
                   child: ListView(
                     shrinkWrap: true,
                     children: [
                       for (var child in _childrenList)
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            child,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 15,
+                          padding: const EdgeInsets.all(3.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(5),
+                                ),
+                                border: Border.all(color: Colors.grey.shade300),
+                                color: Colors.grey.shade100),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              child,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         )
@@ -154,6 +161,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
                       .add({"ChildName": child, "ClassID": _className});
 
                   textFieldController.clear();
+                  _childrenList = [];
 
                   setState(() {});
                 }
