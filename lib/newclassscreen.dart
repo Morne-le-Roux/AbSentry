@@ -7,9 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
 
-final firestore = FirebaseFirestore.instance;
-late User loggedInUser;
-String className = "";
+final _firestore = FirebaseFirestore.instance;
+late User _loggedInUser;
+String _className = "";
 List<String> _childrenList = [];
 
 class NewClassScreen extends StatefulWidget {
@@ -35,7 +35,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
     try {
       final user = auth.currentUser!;
       //TODO: THIS IS UPDATED IN A NEW VERSION OF FLUTTER. LEARN WTF IS NULL SAFETY
-      loggedInUser = user;
+      _loggedInUser = user;
     } catch (e) {
       //TODO: IMPLEMENT CATCH BLOCK
     }
@@ -72,7 +72,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
                     controller: textFieldController,
-                    onChanged: (value) => className = value,
+                    onChanged: (value) => _className = value,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "New Class Name",
@@ -145,42 +145,16 @@ class _NewClassScreenState extends State<NewClassScreen> {
           RoundedButton(
               color: Colors.grey.shade200,
               onPressed: () {
-                List classToAdd = [className];
-                List childToAdd = [];
-                firestore
-                    .collection("${loggedInUser.email}")
-                    .doc("Classes")
-                    .update({"ClassList": FieldValue.arrayUnion(classToAdd)});
-
-                firestore
-                    .collection("${loggedInUser.email}")
-                    .doc("Classes")
-                    .collection(className)
-                    .doc("Children")
-                    .set({"ChildrenList": []});
+                _firestore.collection("Classes").add(
+                    {"ClassID": _className, "CreatedBy": _loggedInUser.email});
 
                 for (var child in _childrenList) {
-                  childToAdd = [child];
-
-                  firestore
-                      .collection("${loggedInUser.email}")
-                      .doc("Classes")
-                      .collection(className)
-                      .doc("Children")
-                      .collection(child)
-                      .doc("placeholder")
-                      .set({"data": "data"});
-
-                  firestore
-                      .collection("${loggedInUser.email}")
-                      .doc("Classes")
-                      .collection(className)
-                      .doc("Children")
-                      .update(
-                          {"ChildrenList": FieldValue.arrayUnion(childToAdd)});
+                  _firestore
+                      .collection("Children")
+                      .add({"ChildName": child, "ClassID": _className});
 
                   textFieldController.clear();
-                  _childrenList = [];
+
                   setState(() {});
                 }
               },

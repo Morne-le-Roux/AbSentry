@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'rounded_button.dart';
 
-late User loggedInUser;
+late User _loggedInUser;
 
 void getCurrentUser() {
   try {
     final user = FirebaseAuth.instance.currentUser;
-    //TODO: THIS IS UPDATED IN A NEW VERSION OF FLUTTER. LEARN WTF IS NULL SAFETY
     if (user != null) {
-      loggedInUser = user;
+      _loggedInUser = user;
     }
   } catch (e) {
     //TODO: IMPLEMENT CATCH BLOCK
@@ -30,9 +29,8 @@ class UserInit {
   UserInit() {
     getCurrentUser();
     FirebaseFirestore.instance
-        .collection("${loggedInUser.email}")
-        .doc("Classes")
-        .set({"Classes": []});
+        .collection("Users")
+        .add({"Email": _loggedInUser.email, "UID": _loggedInUser.uid});
   }
 }
 
