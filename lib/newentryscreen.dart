@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 final _firestore = FirebaseFirestore.instance;
 List _children = [];
@@ -15,8 +16,15 @@ class NewEntryScreen extends StatefulWidget {
 }
 
 class _NewEntryScreenState extends State<NewEntryScreen> {
+  bool showSpinner = false;
   @override
   void initState() {
+    _children = [];
+    _childrenWidgets = [];
+    setState(() {
+      showSpinner = true;
+    });
+
     super.initState();
     getChildren();
   }
@@ -32,29 +40,39 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
     QuerySnapshot querySnapshot = await childrenData.get();
     List allChildren = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-    for (var child in allChildren) {
-      if (child["ClassID"] == "Class 1") {
-        _children.add(child);
+    try {
+      for (var child in allChildren) {
+        if (child["ClassID"] == "Class 1") {
+          _children.add(child);
+        }
       }
-    }
-    print("shits about to happen");
-    createChildWidgets();
-    print("if you're seeing this then it probably worked");
+      createChildWidgets();
+      setState(() {
+        showSpinner = false;
+      });
+    } catch (e) {}
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DecoratedBox(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-                    "assets/background.jpg",
-                  ),
-                  fit: BoxFit.fill)),
-          child: ListView(
-            children: _childrenWidgets,
-          )),
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: DecoratedBox(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      "assets/background.jpg",
+                    ),
+                    fit: BoxFit.fill)),
+            child: ListView.builder(
+                itemCount: _childrenWidgets.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    child: _childrenWidgets[index],
+                  );
+                })),
+      ),
     );
   }
 }
