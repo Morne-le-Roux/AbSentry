@@ -38,7 +38,8 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   Future getChildren() async {
     CollectionReference childrenData = _firestore.collection("Children");
     QuerySnapshot querySnapshot = await childrenData.get();
-    List allChildren = querySnapshot.docs.map((doc) => doc.data()).toList();
+    List allChildren =
+        querySnapshot.docs.reversed.map((doc) => doc.data()).toList();
 
     try {
       for (var child in allChildren) {
@@ -50,7 +51,10 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
       setState(() {
         showSpinner = false;
       });
-    } catch (e) {}
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
   }
 
   @override
