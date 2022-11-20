@@ -31,7 +31,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
 
   void createChildWidgets() {
     for (var child in _children) {
-      _childrenWidgets.add(ChildWidget(child["ChildName"]));
+      _childrenWidgets.add(ChildEntryWidget(child["ChildName"]));
     }
   }
 
@@ -81,21 +81,37 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   }
 }
 
-class ChildWidget extends StatelessWidget {
+class ChildEntryWidget extends StatelessWidget {
   final String childName;
-  const ChildWidget(this.childName, {super.key});
+  const ChildEntryWidget(this.childName, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(5.0),
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        height: 50,
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: Colors.grey.shade200),
             borderRadius: BorderRadius.all(Radius.circular(10))),
-        padding: EdgeInsets.all(8),
-        child: Text(childName),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(childName),
+            Row(
+              children: [
+                Checkbox(
+                  value: true,
+                  onChanged: (value) {},
+                  activeColor: Colors.lightBlue,
+                ),
+                Icon(Icons.notes_rounded),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
