@@ -7,6 +7,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 final _firestore = FirebaseFirestore.instance;
 List _children = [];
 List<Widget> _childrenWidgets = [];
+List<Map> _childData = [{}];
 
 class NewEntryScreen extends StatefulWidget {
   const NewEntryScreen({super.key});
@@ -21,6 +22,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   void initState() {
     _children = [];
     _childrenWidgets = [];
+    _childData = [];
     setState(() {
       showSpinner = true;
     });
@@ -45,6 +47,9 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
       for (var child in allChildren) {
         if (child["ClassID"] == "Class 1") {
           _children.add(child);
+          _childData.add(
+            {"Name": child["ChildName"], "absent": false, "note": ""},
+          );
         }
       }
       createChildWidgets();
@@ -81,10 +86,16 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   }
 }
 
-class ChildEntryWidget extends StatelessWidget {
+class ChildEntryWidget extends StatefulWidget {
   final String childName;
   const ChildEntryWidget(this.childName, {super.key});
 
+  @override
+  State<ChildEntryWidget> createState() => _ChildEntryWidgetState();
+}
+
+class _ChildEntryWidgetState extends State<ChildEntryWidget> {
+  bool isChecked = true;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -93,25 +104,85 @@ class ChildEntryWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 10),
         height: 50,
         decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.grey.shade200),
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade200),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(childName),
+            Text(widget.childName),
             Row(
               children: [
+                Text(
+                  "Present?",
+                  style: TextStyle(
+                      color: Colors.black26, fontStyle: FontStyle.italic),
+                ),
                 Checkbox(
-                  value: true,
-                  onChanged: (value) {},
+                  value: isChecked,
+                  onChanged: (value) {
+                    setState(() {
+                      isChecked = value!;
+                      for (var child in _childData) {
+                        if (child["Name"] == widget.childName) {
+                          child["absent"] = !value;
+                        }
+                      }
+                    });
+                  },
                   activeColor: Colors.lightBlue,
                 ),
-                Icon(Icons.notes_rounded),
+                SizedBox(
+                  width: 10,
+                ),
+                GestureDetector(
+                  onTap: (() {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            NotesEntry(widget.childName));
+                  }),
+                  child: Icon(Icons.notes_rounded),
+                ),
               ],
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class NotesEntry extends StatefulWidget {
+  final String childName;
+  const NotesEntry(this.childName, {super.key});
+
+  @override
+  State<NotesEntry> createState() => _NotesEntryState();
+}
+
+class _NotesEntryState extends State<NotesEntry> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Child Note"),
+      content: TextField(
+        maxLines: null,
+        textAlign: TextAlign.left,
+        decoration: InputDecoration(
+          hintText: "Please keep it short and sweet ;)",
+        ),
+        onChanged: (value) {
+          for (var child in _childData) {
+            if (child["Name"] == widget.childName) {
+              child["absent"] = value;
+              print(_childData);
+            }
+          }
+        },
       ),
     );
   }
