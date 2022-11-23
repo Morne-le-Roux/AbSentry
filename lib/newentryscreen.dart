@@ -91,6 +91,11 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                   color: Colors.grey.shade300,
                   onPressed: () {
                     //TODO:PUSH DATA TO DATABASE
+for (var child in _childData) {
+  _firestore.collection("Children").doc("Class 1-${child["Name"]}").collection(collectionPath)
+}
+
+
                   },
                   text: "Add Today's Entry")
             ],
