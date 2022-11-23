@@ -152,13 +152,14 @@ class _NewClassScreenState extends State<NewClassScreen> {
           RoundedButton(
               color: Colors.grey.shade200,
               onPressed: () {
-                _firestore.collection("Classes").add(
+                _firestore.collection("Classes").doc(_className).set(
                     {"ClassID": _className, "CreatedBy": _loggedInUser.email});
 
                 for (var child in _childrenList) {
                   _firestore
                       .collection("Children")
-                      .add({"ChildName": child, "ClassID": _className});
+                      .doc("$_className-$child")
+                      .set({"ChildName": child, "ClassID": _className});
 
                   textFieldController.clear();
                   _childrenList = [];
