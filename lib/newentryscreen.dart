@@ -1,5 +1,7 @@
-// ignore_for_file: prefer_const_constructors, avoid_print
+// ignore_for_file: prefer_const_constructors, avoid_print, use_build_context_synchronously
 
+import 'package:absentry/basicbutton.dart';
+import 'package:absentry/rounded_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -68,19 +70,32 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: DecoratedBox(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                      "assets/background.jpg",
-                    ),
-                    fit: BoxFit.fill)),
-            child: ListView.builder(
-                itemCount: _childrenWidgets.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    child: _childrenWidgets[index],
-                  );
-                })),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    "assets/background.jpg",
+                  ),
+                  fit: BoxFit.fill)),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                    itemCount: _childrenWidgets.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        child: _childrenWidgets[index],
+                      );
+                    }),
+              ),
+              RoundedButton(
+                  color: Colors.grey.shade300,
+                  onPressed: () {
+                    //TODO:PUSH DATA TO DATABASE
+                  },
+                  text: "Add Today's Entry")
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -165,6 +180,8 @@ class NotesEntry extends StatefulWidget {
 }
 
 class _NotesEntryState extends State<NotesEntry> {
+  String note = "";
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -176,14 +193,33 @@ class _NotesEntryState extends State<NotesEntry> {
           hintText: "Please keep it short and sweet ;)",
         ),
         onChanged: (value) {
-          for (var child in _childData) {
-            if (child["Name"] == widget.childName) {
-              child["absent"] = value;
-              print(_childData);
-            }
-          }
+          note = value;
         },
       ),
+      actions: [
+        BasicButton(
+          icon: Icon(Icons.close_rounded),
+          text: "Close",
+          onpressed: () {
+            Navigator.pop(context);
+            note = "";
+          },
+        ),
+        SizedBox(
+          width: 150,
+        ),
+        BasicButton(
+            icon: Icon(Icons.check_rounded),
+            text: "Add Note",
+            onpressed: () {
+              Navigator.pop(context);
+              for (var child in _childData) {
+                if (child["Name"] == widget.childName) {
+                  child["note"] = note;
+                }
+              }
+            })
+      ],
     );
   }
 }

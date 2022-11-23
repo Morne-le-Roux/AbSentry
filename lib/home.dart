@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void getCurrentUser() {
     try {
       final user = auth.currentUser!;
-      //TODO: THIS IS UPDATED IN A NEW VERSION OF FLUTTER. LEARN WTF IS NULL SAFETY
+
       loggedInUser = user;
     } catch (e) {
       //TODO: IMPLEMENT CATCH BLOCK
@@ -29,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getCurrentUser();
   }
