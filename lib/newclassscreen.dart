@@ -134,12 +134,26 @@ class _NewClassScreenState extends State<NewClassScreen> {
                                 border: Border.all(color: Colors.grey.shade300),
                                 color: Colors.grey.shade100),
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              child,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.person),
+                                Text(
+                                  child,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: (() {
+                                    setState(() {
+                                      _childrenList.remove(child);
+                                    });
+                                  }),
+                                  child: Icon(Icons.close),
+                                )
+                              ],
                             ),
                           ),
                         )
