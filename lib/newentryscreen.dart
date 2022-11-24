@@ -5,11 +5,13 @@ import 'package:absentry/rounded_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:intl/intl.dart';
 
 final _firestore = FirebaseFirestore.instance;
 List _children = [];
 List<Widget> _childrenWidgets = [];
 List<Map> _childData = [{}];
+String todaysDate = DateFormat.yMMMMd().format(DateTime.now());
 
 class NewEntryScreen extends StatefulWidget {
   const NewEntryScreen({super.key});
@@ -31,6 +33,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
 
     super.initState();
     getChildren();
+    print(todaysDate);
   }
 
   void createChildWidgets() {
@@ -91,11 +94,20 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                   color: Colors.grey.shade300,
                   onPressed: () {
                     //TODO:PUSH DATA TO DATABASE
-for (var child in _childData) {
-  _firestore.collection("Children").doc("Class 1-${child["Name"]}").collection(collectionPath)
-}
-
-
+                    for (var child in _childData) {
+                      _firestore
+                          .collection("Children")
+                          .doc("Class 1-${child["Name"]}")
+                          .collection("Entries")
+                          .doc(todaysDate)
+                          .set({
+                        "Date": todaysDate,
+                        "ChildName": child["Name"],
+                        "ClassID": "Class 1",
+                        "Absent": child["absent"],
+                        "Note": child["note"]
+                      });
+                    }
                   },
                   text: "Add Today's Entry")
             ],
