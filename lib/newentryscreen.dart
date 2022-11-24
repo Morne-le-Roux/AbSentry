@@ -94,20 +94,27 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                   color: Colors.grey.shade300,
                   onPressed: () {
                     //TODO:PUSH DATA TO DATABASE
-                    for (var child in _childData) {
-                      _firestore
-                          .collection("Children")
-                          .doc("Class 1-${child["Name"]}")
-                          .collection("Entries")
-                          .doc(todaysDate)
-                          .set({
-                        "Date": todaysDate,
-                        "ChildName": child["Name"],
-                        "ClassID": "Class 1",
-                        "Absent": child["absent"],
-                        "Note": child["note"]
-                      });
+                    try {
+                      for (var child in _childData) {
+                        _firestore
+                            .collection("Children")
+                            .doc("Class 1-${child["Name"]}")
+                            .collection("Entries")
+                            .doc(todaysDate)
+                            .set({
+                          "Date": todaysDate,
+                          "ChildName": child["Name"],
+                          "ClassID": "Class 1",
+                          "Absent": child["absent"],
+                          "Note": child["note"]
+                        });
+                      }
+                    } on Exception catch (e) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(e.toString())));
                     }
+
+                    Navigator.pop(context);
                   },
                   text: "Add Today's Entry")
             ],
