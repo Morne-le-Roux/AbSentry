@@ -14,7 +14,8 @@ List<Map> _childData = [{}];
 String todaysDate = DateFormat.yMMMMd().format(DateTime.now());
 
 class NewEntryScreen extends StatefulWidget {
-  const NewEntryScreen({super.key});
+  String classID;
+  NewEntryScreen({super.key, required this.classID});
 
   @override
   State<NewEntryScreen> createState() => _NewEntryScreenState();
@@ -33,7 +34,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
 
     super.initState();
     getChildren();
-    print(todaysDate);
+    print(widget.classID);
   }
 
   void createChildWidgets() {
@@ -45,12 +46,11 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   Future getChildren() async {
     CollectionReference childrenData = _firestore.collection("Children");
     QuerySnapshot querySnapshot = await childrenData.get();
-    List allChildren =
-        querySnapshot.docs.reversed.map((doc) => doc.data()).toList();
+    List allChildren = querySnapshot.docs.map((doc) => doc.data()).toList();
 
     try {
       for (var child in allChildren) {
-        if (child["ClassID"] == "Class 1") {
+        if (child["ClassID"] == widget.classID) {
           _children.add(child);
           _childData.add(
             {"Name": child["ChildName"], "absent": false, "note": ""},
@@ -93,18 +93,17 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
               RoundedButton(
                   color: Colors.grey.shade300,
                   onPressed: () {
-                    //TODO:PUSH DATA TO DATABASE
                     try {
                       for (var child in _childData) {
                         _firestore
                             .collection("Children")
-                            .doc("Class 1-${child["Name"]}")
+                            .doc("${widget.classID}-${child["Name"]}")
                             .collection("Entries")
                             .doc(todaysDate)
                             .set({
                           "Date": todaysDate,
                           "ChildName": child["Name"],
-                          "ClassID": "Class 1",
+                          "ClassID": widget.classID,
                           "Absent": child["absent"],
                           "Note": child["note"]
                         });

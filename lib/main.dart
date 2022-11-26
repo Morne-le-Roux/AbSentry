@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, depend_on_referenced_packages
 
+import 'package:absentry/class_selection_screen.dart';
 import 'package:absentry/home.dart';
 import 'package:absentry/loginscreen.dart';
 import 'package:absentry/newclassscreen.dart';
-import 'package:absentry/newentryscreen.dart';
 import 'package:absentry/registrationscreen.dart';
 import 'package:absentry/splash.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class AbSentry extends StatelessWidget {
         "/registrationscreen": (context) => RegistrationScreen(),
         "/home": (context) => HomeScreen(),
         "/newClassScreen": (context) => NewClassScreen(),
-        "/newEntryScreen": (context) => NewEntryScreen(),
+        "/classSelection": (context) => ClassSelection(),
       },
     );
   }

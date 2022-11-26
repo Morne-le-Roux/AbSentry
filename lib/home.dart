@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(Icons.list_alt),
                     text: "New Entry",
                     onpressed: () {
-                      Navigator.pushNamed(context, "/newEntryScreen");
+                      Navigator.pushNamed(context, "/classSelection");
                     },
                   ),
                 ],
