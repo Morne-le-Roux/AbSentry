@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:absentry/screens/newentryscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:absentry/custom_widgets/class_widget.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
@@ -75,44 +75,6 @@ class _ClassSelectionState extends State<ClassSelection> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class ClassWidget extends StatefulWidget {
-  final String classID;
-  const ClassWidget({super.key, required this.classID});
-
-  @override
-  State<ClassWidget> createState() => _ClassWidgetState();
-}
-
-class _ClassWidgetState extends State<ClassWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.grey.shade200),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          child: Center(child: Text(widget.classID)),
-        ),
-      ),
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => NewEntryScreen(
-                      classID: widget.classID,
-                    )));
-      },
     );
   }
 }
