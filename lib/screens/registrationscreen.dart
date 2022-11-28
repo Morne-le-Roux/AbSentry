@@ -5,19 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../custom_widgets/rounded_button.dart';
 
-late User _loggedInUser;
-
-void getCurrentUser() {
-  try {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      _loggedInUser = user;
-    }
-  } catch (e) {
-    //TODO: IMPLEMENT CATCH BLOCK
-  }
-}
-
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
 
@@ -25,21 +12,32 @@ class RegistrationScreen extends StatefulWidget {
   State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
-class UserInit {
-  UserInit() {
-    getCurrentUser();
-    FirebaseFirestore.instance
-        .collection("Users")
-        .add({"Email": _loggedInUser.email, "UID": _loggedInUser.uid});
-  }
-}
-
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  late User _loggedInUser;
   final _auth = FirebaseAuth.instance;
   late String email;
   late String password;
   late String password1;
   late String password2;
+
+  void getCurrentUser() {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        _loggedInUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void userInit() {
+    getCurrentUser();
+    FirebaseFirestore.instance
+        .collection("Users")
+        .add({"Email": _loggedInUser.email, "UID": _loggedInUser.uid});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,7 +143,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           await _auth.createUserWithEmailAndPassword(
                               email: email, password: password);
                       if (newUser != null) {
-                        UserInit();
+                        userInit();
                         Navigator.pushNamed(context, "/home");
                       }
                     } else {
