@@ -2,12 +2,6 @@
 
 import 'package:flutter/material.dart';
 import '../custom_widgets/basicbutton.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-final firebase = FirebaseFirestore.instance;
-final auth = FirebaseAuth.instance;
-late User loggedInUser;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,20 +11,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void getCurrentUser() {
-    try {
-      final user = auth.currentUser!;
-
-      loggedInUser = user;
-    } catch (e) {
-      //TODO: IMPLEMENT CATCH BLOCK
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
   }
 
   @override
