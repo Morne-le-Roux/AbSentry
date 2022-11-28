@@ -7,11 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
 
-final _firestore = FirebaseFirestore.instance;
-late User _loggedInUser;
-String _className = "";
-List<String> _childrenList = [];
-
 class NewClassScreen extends StatefulWidget {
   NewClassScreen({super.key});
 
@@ -23,6 +18,10 @@ class _NewClassScreenState extends State<NewClassScreen> {
   final textFieldController = TextEditingController();
   final childTextFieldController = TextEditingController();
   final auth = FirebaseAuth.instance;
+  List<String> _childrenList = [];
+  String _className = "";
+  late User _loggedInUser;
+  final _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -36,7 +35,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
       final user = auth.currentUser!;
       _loggedInUser = user;
     } catch (e) {
-      //TODO: IMPLEMENT CATCH BLOCK
+      print(e);
     }
   }
 
