@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors, depend_on_referenced_packages
 
-import 'package:absentry/class_selection_screen.dart';
-import 'package:absentry/home.dart';
-import 'package:absentry/loginscreen.dart';
-import 'package:absentry/newclassscreen.dart';
-import 'package:absentry/registrationscreen.dart';
-import 'package:absentry/splash.dart';
+import 'package:absentry/screens/class_selection_screen.dart';
+import 'package:absentry/screens/home.dart';
+import 'package:absentry/screens/loginscreen.dart';
+import 'package:absentry/screens/newclassscreen.dart';
+import 'package:absentry/screens/registrationscreen.dart';
+import 'package:absentry/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 

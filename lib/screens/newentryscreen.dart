@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, use_build_context_synchronously
 
-import 'package:absentry/basicbutton.dart';
-import 'package:absentry/rounded_button.dart';
+import 'package:absentry/custom_widgets/basicbutton.dart';
+import 'package:absentry/custom_widgets/rounded_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
