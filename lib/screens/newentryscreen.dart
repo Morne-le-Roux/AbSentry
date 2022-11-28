@@ -7,21 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:intl/intl.dart';
 
-final _firestore = FirebaseFirestore.instance;
-List _children = [];
-List<Widget> _childrenWidgets = [];
 List<Map> _childData = [{}];
-String todaysDate = DateFormat.yMMMMd().format(DateTime.now());
 
 class NewEntryScreen extends StatefulWidget {
-  String classID;
-  NewEntryScreen({super.key, required this.classID});
+  final String classID;
+  const NewEntryScreen({super.key, required this.classID});
 
   @override
   State<NewEntryScreen> createState() => _NewEntryScreenState();
 }
 
 class _NewEntryScreenState extends State<NewEntryScreen> {
+  final _firestore = FirebaseFirestore.instance;
+  String todaysDate = DateFormat.yMMMMd().format(DateTime.now());
+  List<Widget> _childrenWidgets = [];
+  List _children = [];
   bool showSpinner = false;
   @override
   void initState() {
