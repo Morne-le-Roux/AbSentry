@@ -7,9 +7,6 @@ import 'package:absentry/custom_widgets/class_widget.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
-List _allClasses = [];
-List<Widget> _classWidgets = [];
-
 class ClassSelection extends StatefulWidget {
   const ClassSelection({super.key});
 
@@ -18,27 +15,40 @@ class ClassSelection extends StatefulWidget {
 }
 
 class _ClassSelectionState extends State<ClassSelection> {
+  List _allClasses = []; //List for snapshots from database
+  List<Widget> _classWidgets = []; //All widgets for every class
   bool showSpinner = false;
+
   @override
   void initState() {
+    //clear lists on page init
     _allClasses = [];
     _classWidgets = [];
+
+    //show spinner
     setState(() {
       showSpinner = true;
     });
 
-    getChildren();
+    //gets all classes for logged in user.
+    //creates widgets for them and display them.
+    //Clears the spinner on success.
+    getClasses();
     super.initState();
   }
 
-  Future getChildren() async {
-    CollectionReference classData = _firestore.collection("Classes");
+  //grabs class data from database
+  Future getClasses() async {
+    CollectionReference classData =
+        _firestore.collection("Classes"); //Creates Database Reference
     QuerySnapshot querySnapshot = await classData.get();
-    _allClasses = querySnapshot.docs.map((doc) => doc.data()).toList();
+    _allClasses = querySnapshot.docs
+        .map((doc) => doc.data())
+        .toList(); //Adds all snapshots of all te docs into _allClasses
     try {
-      createClassWidgets();
+      createClassWidgets(); //Creates ClassWidgets for viewing
       setState(() {
-        showSpinner = false;
+        showSpinner = false; //clears spinner
       });
     } on Exception catch (e) {
       ScaffoldMessenger.of(context)
@@ -47,6 +57,7 @@ class _ClassSelectionState extends State<ClassSelection> {
   }
 
   void createClassWidgets() {
+    //This creates a widget for the class for viewing
     for (var entry in _allClasses) {
       _classWidgets.add(ClassWidget(classID: entry["ClassID"]));
     }
@@ -56,6 +67,7 @@ class _ClassSelectionState extends State<ClassSelection> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ModalProgressHUD(
+        //spinner
         inAsyncCall: showSpinner,
         child: DecoratedBox(
           decoration: const BoxDecoration(
@@ -65,6 +77,7 @@ class _ClassSelectionState extends State<ClassSelection> {
                   ),
                   fit: BoxFit.fill)),
           child: Expanded(
+            //main list of classes
             child: ListView.builder(
                 itemCount: _classWidgets.length,
                 itemBuilder: (BuildContext context, int index) {

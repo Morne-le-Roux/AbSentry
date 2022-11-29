@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../screens/newentryscreen.dart';
 
 class ClassWidget extends StatefulWidget {
-  final String classID;
+  final String classID; //name of class
   const ClassWidget({super.key, required this.classID});
 
   @override
@@ -28,12 +28,15 @@ class _ClassWidgetState extends State<ClassWidget> {
         ),
       ),
       onTap: () {
+        //opens class entry screen on tap
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => NewEntryScreen(
-                      classID: widget.classID,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => NewEntryScreen(
+              classID: widget.classID,
+            ),
+          ),
+        );
       },
     );
   }
