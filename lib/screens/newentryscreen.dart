@@ -5,6 +5,7 @@ import 'package:absentry/custom_widgets/rounded_button.dart';
 import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:intl/intl.dart';
 
@@ -73,6 +74,11 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: ModalProgressHUD(
+        color: kBackgroundColor,
+        progressIndicator: SizedBox(
+            height: 150,
+            width: 150,
+            child: Lottie.asset("assets/loadingindicator.json")),
         inAsyncCall: showSpinner,
         child: Column(
           children: [

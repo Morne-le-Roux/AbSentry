@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:absentry/custom_widgets/class_widget.dart';
+import 'package:lottie/lottie.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
@@ -68,6 +69,11 @@ class _ClassSelectionState extends State<ClassSelection> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ModalProgressHUD(
+        color: kBackgroundColor,
+        progressIndicator: SizedBox(
+            height: 150,
+            width: 150,
+            child: Lottie.asset("assets/loadingindicator.json")),
         //spinner
         inAsyncCall: showSpinner,
 
