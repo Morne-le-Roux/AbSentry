@@ -1,3 +1,4 @@
+import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:flutter/material.dart';
 import '../screens/newentryscreen.dart';
 
@@ -18,13 +19,17 @@ class _ClassWidgetState extends State<ClassWidget> {
         child: Container(
           height: 50,
           decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.grey.shade200),
+            color: kBackgroundColor,
+            border: Border.all(color: kButtonColor),
             borderRadius: const BorderRadius.all(
               Radius.circular(10),
             ),
           ),
-          child: Center(child: Text(widget.classID)),
+          child: Center(
+              child: Text(
+            widget.classID,
+            style: kButtonTextStyle.copyWith(color: kButtonColor),
+          )),
         ),
       ),
       onTap: () {

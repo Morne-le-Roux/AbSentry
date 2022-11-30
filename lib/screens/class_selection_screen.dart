@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -69,13 +70,13 @@ class _ClassSelectionState extends State<ClassSelection> {
       body: ModalProgressHUD(
         //spinner
         inAsyncCall: showSpinner,
+
+        //! DO NOT REMOVE DECORATED BOX
+        //! CODE DOES NOT WORK WITHOUT IT
+        //! I DON'T KNOW WHY
+
         child: DecoratedBox(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-                    "assets/background.jpg",
-                  ),
-                  fit: BoxFit.fill)),
+          decoration: BoxDecoration(color: kBackgroundColor),
           child: Expanded(
             //main list of classes
             child: ListView.builder(

@@ -2,6 +2,7 @@
 
 import 'package:absentry/custom_widgets/basicbutton.dart';
 import 'package:absentry/custom_widgets/rounded_button.dart';
+import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -70,54 +71,47 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-                    "assets/background.jpg",
-                  ),
-                  fit: BoxFit.fill)),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                    itemCount: _childrenWidgets.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        child: _childrenWidgets[index],
-                      );
-                    }),
-              ),
-              RoundedButton(
-                  color: Colors.grey.shade300,
-                  onPressed: () {
-                    try {
-                      for (var child in _childData) {
-                        _firestore
-                            .collection("Children")
-                            .doc("${widget.classID}-${child["Name"]}")
-                            .collection("Entries")
-                            .doc(todaysDate)
-                            .set({
-                          "Date": todaysDate,
-                          "ChildName": child["Name"],
-                          "ClassID": widget.classID,
-                          "Absent": child["absent"],
-                          "Note": child["note"]
-                        });
-                      }
-                    } on Exception catch (e) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(e.toString())));
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                  itemCount: _childrenWidgets.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      child: _childrenWidgets[index],
+                    );
+                  }),
+            ),
+            RoundedButton(
+                color: kButtonColor,
+                onPressed: () {
+                  try {
+                    for (var child in _childData) {
+                      _firestore
+                          .collection("Children")
+                          .doc("${widget.classID}-${child["Name"]}")
+                          .collection("Entries")
+                          .doc(todaysDate)
+                          .set({
+                        "Date": todaysDate,
+                        "ChildName": child["Name"],
+                        "ClassID": widget.classID,
+                        "Absent": child["absent"],
+                        "Note": child["note"]
+                      });
                     }
+                  } on Exception catch (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.toString())));
+                  }
 
-                    Navigator.pop(context);
-                  },
-                  text: "Add Today's Entry")
-            ],
-          ),
+                  Navigator.pop(context);
+                },
+                text: "Add Today's Entry")
+          ],
         ),
       ),
     );
@@ -142,8 +136,8 @@ class _ChildEntryWidgetState extends State<ChildEntryWidget> {
         padding: EdgeInsets.symmetric(horizontal: 10),
         height: 50,
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.grey.shade200),
+          color: kButtonColor.withAlpha(230),
+          border: Border.all(color: kButtonColor),
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
@@ -151,12 +145,15 @@ class _ChildEntryWidgetState extends State<ChildEntryWidget> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(widget.childName),
+            Text(
+              widget.childName,
+              style: kButtonTextStyle.copyWith(color: kBackgroundColor),
+            ),
             Row(
               children: [
                 Text(
                   "Present?",
-                  style: TextStyle(
+                  style: kButtonTextStyle.copyWith(
                       color: Colors.black26, fontStyle: FontStyle.italic),
                 ),
                 Checkbox(
@@ -171,7 +168,7 @@ class _ChildEntryWidgetState extends State<ChildEntryWidget> {
                       }
                     });
                   },
-                  activeColor: Colors.lightBlue,
+                  activeColor: kBackgroundColor,
                 ),
                 SizedBox(
                   width: 10,
@@ -208,13 +205,18 @@ class _NotesEntryState extends State<NotesEntry> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Child Note"),
+      backgroundColor: kBackgroundColor,
+      title: Text(
+        "Child Note",
+        style: kButtonTextStyle.copyWith(color: kButtonColor),
+      ),
       content: TextField(
         maxLines: null,
         textAlign: TextAlign.left,
         decoration: InputDecoration(
-          hintText: "Please keep it short and sweet ;)",
-        ),
+            hintText: "Please keep it short and sweet ;)",
+            hintStyle:
+                kButtonTextStyle.copyWith(color: kButtonColor.withAlpha(50))),
         onChanged: (value) {
           note = value;
         },

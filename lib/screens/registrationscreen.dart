@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_null_comparison, use_build_context_synchronously
 
+import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -133,7 +134,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: RoundedButton(
-                color: Colors.grey.shade300,
+                color: kButtonColor,
                 onPressed: () async {
                   try {
                     if (password1 == password2) {

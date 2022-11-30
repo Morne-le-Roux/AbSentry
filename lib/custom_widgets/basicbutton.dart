@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
+import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:flutter/material.dart';
 
 class BasicButton extends StatelessWidget {
@@ -17,17 +18,14 @@ class BasicButton extends StatelessWidget {
         ElevatedButton(
           onPressed: onpressed,
           style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.black,
-              backgroundColor: Colors.grey.shade300,
+              foregroundColor: kBackgroundColor,
+              backgroundColor: kButtonColor,
               shape: StadiumBorder()),
           child: icon,
         ),
         Text(
           text,
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w900,
-          ),
+          style: kButtonTextStyle.copyWith(color: kButtonColor),
         )
       ],
     );

@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_statements, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, prefer_const_constructors, unnecessary_this
 
+import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
@@ -21,7 +22,10 @@ class RoundedButton extends StatelessWidget {
           onPressed: this.onPressed,
           minWidth: 200.0,
           height: 42.0,
-          child: Text(this.text),
+          child: Text(
+            this.text,
+            style: kButtonTextStyle,
+          ),
         ),
       ),
     );

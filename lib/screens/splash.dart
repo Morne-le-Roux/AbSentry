@@ -2,6 +2,7 @@
 
 import 'package:absentry/screens/home.dart';
 import 'package:absentry/screens/loginscreen.dart';
+import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -13,34 +14,30 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: DecoratedBox(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                      "assets/background.jpg",
-                    ),
-                    fit: BoxFit.fill)),
-            child: AnimatedSplashScreen(
-              backgroundColor: Colors.transparent,
-              splash: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "AbSentry",
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: Colors.grey.shade700,
-                        fontFamily: "SplashFont",
-                        fontSize: 70.0),
-                  )
-                ],
-              ),
-              nextScreen: LoginScreen(),
-              duration: 3000,
-              splashTransition: SplashTransition.fadeTransition,
-              pageTransitionType: PageTransitionType.fade,
-              splashIconSize: 100,
-            )));
+        backgroundColor: kBackgroundColor,
+        body: AnimatedSplashScreen(
+          backgroundColor: Colors.transparent,
+          splash: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Hero(
+                tag: "splashToLogin",
+                child: Text(
+                  "AbSentry",
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: kButtonColor,
+                      fontFamily: "SplashFont",
+                      fontSize: 70.0),
+                ),
+              )
+            ],
+          ),
+          nextScreen: LoginScreen(),
+          duration: 3000,
+          splashTransition: SplashTransition.fadeTransition,
+          pageTransitionType: PageTransitionType.fade,
+          splashIconSize: 100,
+        ));
   }
 }
