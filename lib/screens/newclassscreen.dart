@@ -185,10 +185,11 @@ class _NewClassScreenState extends State<NewClassScreen> {
                   });
 
                   for (var child in _childrenList) {
-                    _firestore
-                        .collection("Children")
-                        .doc("$_className-$child")
-                        .set({"ChildName": child, "ClassID": _className});
+                    _firestore.collection("Children").doc().set({
+                      "ChildName": child,
+                      "ClassID": _className,
+                      "CreatedBy": _loggedInUser.email
+                    });
 
                     textFieldController.clear();
                     _childrenList = [];
