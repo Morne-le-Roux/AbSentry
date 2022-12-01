@@ -3,6 +3,8 @@
 import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:flutter/material.dart';
 
+//General use round button. Repurposed it from an older project.
+
 class RoundedButton extends StatelessWidget {
   final Color color;
   final VoidCallback onPressed;

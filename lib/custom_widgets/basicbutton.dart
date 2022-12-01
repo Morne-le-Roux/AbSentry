@@ -3,6 +3,8 @@
 import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:flutter/material.dart';
 
+//Small little button with an icon and some text at the bottom.
+
 class BasicButton extends StatelessWidget {
   final Widget icon;
   final String text;
