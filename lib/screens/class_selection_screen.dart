@@ -2,6 +2,7 @@
 
 import 'package:absentry/theming/themes_and_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:absentry/custom_widgets/class_widget.dart';
@@ -47,7 +48,9 @@ class _ClassSelectionState extends State<ClassSelection> {
     _allClasses = querySnapshot.docs
         .map((doc) => doc.data())
         .toList(); //Adds all snapshots of all te docs into _allClasses
+
     try {
+      print(FirebaseAuth.instance.currentUser!.email);
       createClassWidgets(); //Creates ClassWidgets for viewing
       setState(() {
         showSpinner = false; //clears spinner
@@ -61,7 +64,9 @@ class _ClassSelectionState extends State<ClassSelection> {
   void createClassWidgets() {
     //This creates a widget for the class for viewing
     for (var entry in _allClasses) {
-      _classWidgets.add(ClassWidget(classID: entry["ClassID"]));
+      if (entry["CreatedBy"] == FirebaseAuth.instance.currentUser!.email) {
+        _classWidgets.add(ClassWidget(classID: entry["ClassID"]));
+      }
     }
   }
 
