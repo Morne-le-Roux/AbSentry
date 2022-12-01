@@ -179,16 +179,19 @@ class _NewClassScreenState extends State<NewClassScreen> {
             RoundedButton(
                 color: kButtonColor,
                 onPressed: () {
-                  _firestore.collection("Classes").doc(_className).set({
-                    "ClassID": _className,
-                    "CreatedBy": _loggedInUser.email
-                  });
+                  _firestore
+                      .collection(_loggedInUser.uid)
+                      .doc(_className)
+                      .set({"ClassID": _className});
 
                   for (var child in _childrenList) {
-                    _firestore.collection("Children").doc().set({
+                    _firestore
+                        .collection(_loggedInUser.uid)
+                        .doc(_className)
+                        .collection("Children")
+                        .doc(child)
+                        .set({
                       "ChildName": child,
-                      "ClassID": _className,
-                      "CreatedBy": _loggedInUser.email
                     });
 
                     textFieldController.clear();

@@ -42,15 +42,14 @@ class _ClassSelectionState extends State<ClassSelection> {
 
   //grabs class data from database
   Future getClasses() async {
-    CollectionReference classData =
-        _firestore.collection("Classes"); //Creates Database Reference
+    CollectionReference classData = _firestore.collection(
+        FirebaseAuth.instance.currentUser!.uid); //Creates Database Reference
     QuerySnapshot querySnapshot = await classData.get();
     _allClasses = querySnapshot.docs
         .map((doc) => doc.data())
         .toList(); //Adds all snapshots of all te docs into _allClasses
 
     try {
-      print(FirebaseAuth.instance.currentUser!.email);
       createClassWidgets(); //Creates ClassWidgets for viewing
       setState(() {
         showSpinner = false; //clears spinner
@@ -64,9 +63,7 @@ class _ClassSelectionState extends State<ClassSelection> {
   void createClassWidgets() {
     //This creates a widget for the class for viewing
     for (var entry in _allClasses) {
-      if (entry["CreatedBy"] == FirebaseAuth.instance.currentUser!.email) {
-        _classWidgets.add(ClassWidget(classID: entry["ClassID"]));
-      }
+      _classWidgets.add(ClassWidget(classID: entry["ClassID"]));
     }
   }
 

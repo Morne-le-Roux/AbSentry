@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 List<Map> _childData = [{}];
 
@@ -25,6 +26,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   List<Widget> _childrenWidgets = [];
   List _children = [];
   bool showSpinner = false;
+
   @override
   void initState() {
     _children = [];
@@ -46,18 +48,19 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   }
 
   Future getChildren() async {
-    CollectionReference childrenData = _firestore.collection("Children");
+    CollectionReference childrenData = _firestore
+        .collection(FirebaseAuth.instance.currentUser!.uid)
+        .doc(widget.classID)
+        .collection("Children");
     QuerySnapshot querySnapshot = await childrenData.get();
     List allChildren = querySnapshot.docs.map((doc) => doc.data()).toList();
 
     try {
       for (var child in allChildren) {
-        if (child["ClassID"] == widget.classID) {
-          _children.add(child);
-          _childData.add(
-            {"Name": child["ChildName"], "absent": false, "note": ""},
-          );
-        }
+        _children.add(child);
+        _childData.add(
+          {"Name": child["ChildName"], "absent": false, "note": ""},
+        );
       }
       createChildWidgets();
       setState(() {
@@ -97,8 +100,10 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                   try {
                     for (var child in _childData) {
                       _firestore
+                          .collection(FirebaseAuth.instance.currentUser!.uid)
+                          .doc(widget.classID)
                           .collection("Children")
-                          .doc("${widget.classID}-${child["Name"]}")
+                          .doc(child["Name"])
                           .collection("Entries")
                           .doc(todaysDate)
                           .set({
