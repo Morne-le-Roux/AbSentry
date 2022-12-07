@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
 
+//SCREEN THAT ALLOWS USER TO CREATE A NEW CLASS AND SAVES IT TO THE DATABASE
 class NewClassScreen extends StatefulWidget {
   NewClassScreen({super.key});
 
@@ -16,22 +17,30 @@ class NewClassScreen extends StatefulWidget {
 }
 
 class _NewClassScreenState extends State<NewClassScreen> {
+  //TextEditingController for the Class Name TextField
   final textFieldController = TextEditingController();
+  //TextEditingController for the Child Name TextField
   final childTextFieldController = TextEditingController();
+  //Firebase Auth Instance
   final auth = FirebaseAuth.instance;
+  //List of Children that added to the class before the data is pushed to the DB
   List<String> _childrenList = [];
+  //ClassName for the new Class before the data is pushed to the DB
   String _className = "";
+  //Current LoggedInUser
   late User _loggedInUser;
+  //DB
   final _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
 
-    getCurrentUser();
+    getCurrentUser(); //This grabs the currently logged in user's details.
   }
 
   void getCurrentUser() {
+    //This grabs the currently logged in user's details.
     try {
       final user = auth.currentUser!;
       _loggedInUser = user;
@@ -42,7 +51,8 @@ class _NewClassScreenState extends State<NewClassScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String newChildName = "";
+    String newChildName =
+        ""; //Sets the child's name before being added to the list.
     return Scaffold(
         backgroundColor: kBackgroundColor,
         body: Column(
@@ -50,6 +60,9 @@ class _NewClassScreenState extends State<NewClassScreen> {
             SizedBox(
               height: 40,
             ),
+
+            //ClassName TextField
+
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
@@ -82,6 +95,9 @@ class _NewClassScreenState extends State<NewClassScreen> {
                   SizedBox(
                     height: 20,
                   ),
+
+                  //ChildName TextField
+
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
@@ -106,6 +122,9 @@ class _NewClassScreenState extends State<NewClassScreen> {
                       ),
                     ),
                   ),
+
+                  //Button that adds new child's name to the list
+
                   RoundedButton(
                       color: kButtonColor,
                       onPressed: () {
@@ -121,6 +140,9 @@ class _NewClassScreenState extends State<NewClassScreen> {
                       style: kButtonTextStyle.copyWith(color: kButtonColor),
                     ),
                   ),
+
+                  //CONTAINER THAT LISTS ALL OF THE NEW KIDS NAMES
+
                   Container(
                     height: 400,
                     decoration: BoxDecoration(
@@ -158,6 +180,9 @@ class _NewClassScreenState extends State<NewClassScreen> {
                                       fontSize: 15,
                                     ),
                                   ),
+
+                                  //THIS REMOVES THE NAME OUT OF THE LIST
+
                                   GestureDetector(
                                     onTap: (() {
                                       setState(() {
@@ -176,6 +201,8 @@ class _NewClassScreenState extends State<NewClassScreen> {
                 ],
               ),
             ),
+
+            //ON TAP PUSHES ABOVE DATA TO THE DB
             RoundedButton(
                 color: kButtonColor,
                 onPressed: () {

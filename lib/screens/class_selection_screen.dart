@@ -8,6 +8,9 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:absentry/custom_widgets/class_widget.dart';
 import 'package:lottie/lottie.dart';
 
+// class selection screen. Will display a list of widgets of the logged in users's classes.
+//On Tap on one of the widgets will open up the new entry screen for the day's entry.
+
 final _firestore = FirebaseFirestore.instance;
 
 class ClassSelection extends StatefulWidget {

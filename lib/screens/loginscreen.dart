@@ -8,6 +8,8 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../custom_widgets/rounded_button.dart';
 import 'package:lottie/lottie.dart';
 
+//LOGIN SCREEN. FIRST SCREEN TO SHOW UP WHEN USER OPENS UP APP
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -16,14 +18,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _auth = FirebaseAuth.instance;
-  bool showSpinner = false;
-  late String email;
-  late String password;
+  final _auth = FirebaseAuth.instance; //Firebase Instance
+  bool showSpinner = false; //Spinner for loading times.
+  late String email; //Email Entry for login.
+  late String password; //Password entry for login.
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: kBackgroundColor,
+
+        //Loading Screen
         body: ModalProgressHUD(
           inAsyncCall: showSpinner,
           color: kBackgroundColor,
