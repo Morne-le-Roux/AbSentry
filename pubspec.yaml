@@ -43,7 +43,8 @@ dependencies:
   modal_progress_hud_nsn: ^0.3.0
   intl:
   google_fonts:
-
+  syncfusion_flutter_xlsio: ^20.3.60-beta
+syncfusion_flutter_xlsio: ^20.3.60-beta
 dev_dependencies:
   flutter_test:
     sdk: flutter

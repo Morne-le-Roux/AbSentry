@@ -45,7 +45,7 @@ class _NewClassScreenState extends State<NewClassScreen> {
       final user = auth.currentUser!;
       _loggedInUser = user;
     } catch (e) {
-      print(e);
+      //TODO: IMPLEMENT CATCH BLOCK
     }
   }
 

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:absentry/custom_widgets/class_widget.dart';
 import 'package:absentry/custom_widgets/rounded_button.dart';
 import 'package:absentry/theming/themes_and_styles.dart';
@@ -17,6 +19,8 @@ class ReportScreen extends StatefulWidget {
 class _ReportScreenState extends State<ReportScreen> {
 //FirestoreAuth Instance
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+//Excel instance
 
   List _allClasses = []; //List for snapshots from database
   List<Widget> _classWidgets = []; //All widgets for every class

@@ -4,9 +4,12 @@
         "basictextbox",
         "bebas",
         "Graad",
+        "Gridlines",
         "mobilesdk",
         "morneleroux",
         "Neue",
-        "roboto"
+        "roboto",
+        "syncfusion",
+        "xlsio"
     ]
 }
