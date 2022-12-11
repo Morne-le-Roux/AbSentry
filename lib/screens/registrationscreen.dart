@@ -32,7 +32,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         _loggedInUser = user;
       }
     } catch (e) {
-      print(e);
+      //TODO: IMPLEMENT CATCH BLOCK
     }
   }
 

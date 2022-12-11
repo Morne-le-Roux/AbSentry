@@ -75,8 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icon(Icons.file_download),
                       text: "Report (TBA)",
                       onpressed: () {
-                        Navigator.pushNamed(context,
-                            "/reportScreen"); //TODO: Implement route name
+                        Navigator.pushNamed(context, "/reportScreen");
                       })
                 ],
               ),
