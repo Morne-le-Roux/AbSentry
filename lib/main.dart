@@ -5,7 +5,7 @@ import 'package:absentry/screens/home.dart';
 import 'package:absentry/screens/loginscreen.dart';
 import 'package:absentry/screens/newclassscreen.dart';
 import 'package:absentry/screens/registrationscreen.dart';
-import 'package:absentry/screens/report_screen.dart';
+import 'package:absentry/screens/report_screen_selection.dart';
 import 'package:absentry/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,7 +32,7 @@ class AbSentry extends StatelessWidget {
         "/home": (context) => HomeScreen(),
         "/newClassScreen": (context) => NewClassScreen(),
         "/classSelection": (context) => ClassSelection(),
-        "/reportScreen": (context) => ReportScreen(),
+        "/reportScreen": (context) => ReportScreenSelection(),
       },
     );
   }
