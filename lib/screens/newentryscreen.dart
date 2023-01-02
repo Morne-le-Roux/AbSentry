@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, use_build_context_synchronously
-
 import 'package:absentry/custom_widgets/basicbutton.dart';
 import 'package:absentry/custom_widgets/rounded_button.dart';
 import 'package:absentry/theming/themes_and_styles.dart';
@@ -144,12 +142,12 @@ class _ChildEntryWidgetState extends State<ChildEntryWidget> {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         height: 50,
         decoration: BoxDecoration(
           color: kButtonColor.withAlpha(230),
           border: Border.all(color: kButtonColor),
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
         ),
@@ -181,7 +179,7 @@ class _ChildEntryWidgetState extends State<ChildEntryWidget> {
                   },
                   activeColor: kBackgroundColor,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 GestureDetector(
@@ -191,7 +189,7 @@ class _ChildEntryWidgetState extends State<ChildEntryWidget> {
                         builder: (BuildContext context) =>
                             NotesEntry(widget.childName));
                   }),
-                  child: Icon(Icons.notes_rounded),
+                  child: const Icon(Icons.notes_rounded),
                 ),
               ],
             ),
@@ -234,18 +232,18 @@ class _NotesEntryState extends State<NotesEntry> {
       ),
       actions: [
         BasicButton(
-          icon: Icon(Icons.close_rounded),
+          icon: const Icon(Icons.close_rounded),
           text: "Close",
           onpressed: () {
             Navigator.pop(context);
             note = "";
           },
         ),
-        SizedBox(
+        const SizedBox(
           width: 150,
         ),
         BasicButton(
-            icon: Icon(Icons.check_rounded),
+            icon: const Icon(Icons.check_rounded),
             text: "Add Note",
             onpressed: () {
               Navigator.pop(context);
